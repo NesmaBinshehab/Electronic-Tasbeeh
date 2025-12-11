@@ -6,97 +6,149 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  @override Widget build(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'مسبحة إلكترونية',
-      theme: ThemeData( primarySwatch: Colors.teal, ),
-      home: const MyHomePage(
-          title: 'مسبحة إلكترونية'),
+      title: 'My CV',
       debugShowCheckedModeBanner: false,
-    ); } }
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({
-    super.key, required this.title
-  });
-  final String title;
-  @override State<MyHomePage> createState() => _MyHomePageState();
-}
-class _MyHomePageState extends State<MyHomePage> {
-  String currentText = "ابدأ"; List<int> counts = [0, 0, 0];
-
-
-void increment(int index, String text) {
-  setState(() {
-    counts[index]++;
-    currentText = text;
-  }); }
-void resetCounts() {
-  setState(() {
-    counts = [0, 0, 0];
-    currentText = "ابدأ";
-  }); }
-int getCurrentCount() {
-  switch (currentText) {
-    case "الحمد لله": return counts[0];
-    case "الله أكبر": return counts[1];
-    case "سبحان الله": return counts[2];
-    default: return 0;
-  } }
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    backgroundColor: Color(0xffe6dad3),
-    appBar: AppBar(
-      title: Text(widget.title), centerTitle: true, ),
-    body: Center(
-      child: Column(
-        mainAxisAlignment:
-        MainAxisAlignment.center,
+      home: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          title: const Text( "CV",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              letterSpacing: 1.2,
+            ), ),
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+        ),
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFFA873E1),
+                Color(0xFF7097DA)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ), ),
+          child: Center( child: SingleChildScrollView(
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 70, left: 20, right: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xfff4f3f3),
+                        Color(0xffbdafbf),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0xff272626),
+                        blurRadius: 25,
+                        offset: const Offset(0, 6),
+                      ), ], ),
+                  child:
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(25, 80, 25, 25),
+                    child:
+                    Column(
+                      children: [
+                        const Text( "نسمة بن شهاب",
+                          style: TextStyle( fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF333333),
+                          ), ),
+                        const Text( "طالبة تقنية معلومات",
+                          style: TextStyle( fontSize: 16,
+                            color: Colors.grey,
+                          ), ),
+                        const SizedBox(height: 25),
+                        buildInfoRow(Icons.email,
+                            "nesmabinshehab@gmail.com"),
+                        buildInfoRow( Icons.phone, "777777777"),
+                        buildInfoRow( Icons.location_on, "اليمن - حضرموت"),
+                        const Divider(height: 40, thickness: 1),
+                  Row( children: [
+                    Expanded( child: Column(
+                      children:
+                      const [ Text( "المؤهلات العلمية",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.indigo,
+                        ), ),
+                        SizedBox(height: 10),
+                        Text( "- دبلوم لغة إنجليزية\n- شهادة الرخصة الدولية لقيادة الحاسوب",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 15),
+                        ), ], ), ),
+                    Container( height: 90, width: 1,
+                      color: Colors.grey.shade400,
+                      margin: const EdgeInsets.symmetric(horizontal: 15),
+                    ),
+                    Expanded( child: Column(
+                      children: const [
+                        Text( "المؤهلات العملية",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.indigo,
+                          ), ),
+                        SizedBox(height: 10),
+                        Text( "- تطوير مواقع ويب \n- تطوير مشاريع Flutter شخصية",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 15),
+                        ), ], ), ), ], ),
+                        const Divider(height: 40, thickness: 1),
+                        const Text( "المهارات",
+                          style: TextStyle( fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.indigo,
+                          ), ),
+                  const SizedBox(height: 15),
+                  Wrap(
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: const [
+                      SkillChip("Flutter"),
+                      SkillChip("Dart"),
+                      SkillChip("Unity"),
+                      SkillChip("JavaScript"),
+                      SkillChip("UI/UX"),
+                      SkillChip("JAVA"),
+                    ], ), ], ), ), ),
+                const Positioned( top: 10,
+                  child: CircleAvatar(
+                    radius: 55,
+                    backgroundColor: Colors.white,
+                    backgroundImage: AssetImage('images/4.jpg'),
+                  ), ), ], ), ), ), ),
+      ));
+  }
+  static Widget buildInfoRow(IconData icon, String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: 20),
-          Text( currentText,
-            style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w500),
-          ), const SizedBox(height: 10),
-          Text( '${getCurrentCount()}',
-            style: const TextStyle(fontSize: 30,
-                fontWeight: FontWeight.bold),
-          ), const SizedBox(height: 20),
-          Row( mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton( onPressed: () => increment(0, "الحمد لله"),
-                style: ElevatedButton.styleFrom( backgroundColor: Color(0xffefc895),foregroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10)),
-                child: const Text('الحمد لله'), ),
-              const SizedBox(width: 10),
-              ElevatedButton( onPressed: () => increment(1, "الله أكبر"),
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xffefc895),
-                    foregroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10)),
-                child: const Text('الله أكبر'), ),
-              const SizedBox(width: 10),
-              ElevatedButton( onPressed: () => increment(2, "سبحان الله"),
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xffefc895),
-                    foregroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 10)),
-                child: const Text('سبحان الله'), ), ], ),
-          const SizedBox(height: 30),
-          ElevatedButton( onPressed: resetCounts,
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xff805721),
-                foregroundColor: Colors.black,
-                padding: const EdgeInsets.symmetric(horizontal: 30,
-                    vertical: 15)),
-            child: const Text( 'تصفير العدادات',
-              style: TextStyle(fontSize: 18,
-                  fontWeight: FontWeight.bold), ), ) ], ), ), );
-} }
-
-
+          Icon(icon, color: Colors.indigo),
+          const SizedBox(width: 10),
+          Text(text, style: const TextStyle(fontSize: 16)),
+        ], ), ); } }
+class SkillChip extends StatelessWidget {
+  final String label;
+  const SkillChip(this.label, {super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Chip(
+      label: Text(
+        label, style: const TextStyle(color:Colors.white), ),
+      backgroundColor: Colors.indigo, padding:
+    const EdgeInsets.symmetric(horizontal: 10, vertical: 6), ); } }
 
