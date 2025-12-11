@@ -1,60 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:untitled/secondpage.dart';
+
+import 'aboutpage.dart';
+
 
 void main() {
-  runApp(TodoApp());
+  runApp(const MyApp());
 }
 
-class TodoApp extends StatefulWidget {
-  @override
-  _TodoAppState createState() => _TodoAppState();
-}
-
-class _TodoAppState extends State<TodoApp> {
-  final List<String> _todos = [];
-
-  void _addTodoItem(String task) {
-    if (task.isNotEmpty) {
-      setState(() {
-        _todos.add(task);
-      });
-    }
-  }
-
-  void _removeTodoItem(int index) {
-    setState(() {
-      _todos.removeAt(index);
-    });
-  }
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Simple To-Do App'),
-        ),
-        body: Column(
-          children: <Widget>[
-            TextField(
-              onSubmitted: _addTodoItem,
-              decoration: InputDecoration(
-                labelText: 'Enter a new task',
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _todos.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(_todos[index]),
-                    //subtitle: Text("$index"),
-                    trailing: IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () => _removeTodoItem(index),
-                    ),
+      title: 'Named Routes Demo',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomeScreen(),
+        '/SecondPage': (context) => const SecondPage(),
+        '/about': (context) => const AboutScreen(),
+      },
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Home')),
+      body: Center(
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () async{
+                final result = await Navigator.pushNamed(
+                    context,'/SecondPage'
+                )as bool?;
+                if (result != null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(result?'You selected accept':'you selected not to accept')),
                   );
-                },
-              ),
+                }
+              },
+              child: const Text('Go to selection screen'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/about');
+              },
+              child: const Text('Go to About'),
             ),
           ],
         ),
